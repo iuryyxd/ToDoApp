@@ -1,14 +1,11 @@
-import type { Metadata } from "next";
+"use client";
+
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { TasksProvider } from "@/contexts/tasks-context";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "ToDo App",
-  description: "Lista de tarefas",
-};
 
 const queryClient = new QueryClient();
 
@@ -21,7 +18,7 @@ export default function RootLayout({
     <html lang="pt-br">
       <body className={inter.className}>
         <QueryClientProvider client={queryClient}>
-          {children}
+          <TasksProvider>{children}</TasksProvider>
         </QueryClientProvider>
       </body>
     </html>
