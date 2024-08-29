@@ -53,10 +53,15 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
         
-        blue: "var(--blue)",
-        "blue-dark": "var(--blue-dark)",
-        purple: "var(--purple)",
-        "purple-dark": "var(--purple-dark)",
+        blue: {
+          DEFAULT: "var(--blue)",
+          dark: "var(--blue-dark)",
+        },
+
+        purple: {
+          DEFAULT: "var(--purple)",
+          dark: "var(--purple-dark)",
+        },
 
         gray: {
           700: "var(--gray-700)",
