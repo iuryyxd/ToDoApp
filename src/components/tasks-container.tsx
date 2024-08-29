@@ -1,16 +1,46 @@
 import ClipboardIcon from "@/assets/clipboard.svg";
 import Image from "next/image";
+import { Task } from "@/components/task";
+import ReactLoading from "react-loading";
+import { useTasks } from "@/hooks/useTasks";
 
-export function Tasks() {
+export function TasksContainer() {
+  const { tasks, isLoading, deleteTask, updateTask } = useTasks();
+
   return (
     <main className="w-full pt-[5.6875rem] flex justify-center">
       <div className="max-w-[46rem] w-full">
         <header className="flex items-center justify-between border-b border-gray-400 pb-6">
-          <HeaderItem title="Tarefas criadas" value={0} />
-          <HeaderItem title="Concluídas" value={0} />
+          <HeaderItem
+            title="Tarefas criadas"
+            value={tasks ? tasks.length : 0}
+          />
+          <HeaderItem
+            title="Concluídas"
+            value={tasks ? tasks.filter((task) => task.isCompleted).length : 0}
+          />
         </header>
 
-        <TasksPlaceholder />
+        {isLoading ? (
+          <ReactLoading type="bubbles" className="w-full mx-auto pt-10" />
+        ) : tasks.length === 0 ? (
+          <TasksPlaceholder />
+        ) : (
+          <div className="flex flex-col gap-3 pt-6">
+            {tasks.map((task) => {
+              return (
+                <Task
+                  key={task.id}
+                  id={task.id}
+                  isCompleted={task.isCompleted}
+                  taskName={task.taskName}
+                  onTaskChange={(task) => updateTask(task)}
+                  onDeleteTask={(id) => deleteTask(id)}
+                />
+              );
+            })}
+          </div>
+        )}
       </div>
     </main>
   );
